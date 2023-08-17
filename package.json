@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "webdev-server-project-su2-2023",
+  "version": "1.0.0",
+  "description": "Server side implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "start": "node app.js"
+}

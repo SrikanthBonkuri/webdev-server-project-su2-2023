@@ -73,4 +73,22 @@ const userSchema = new mongoose.Schema({
     res.send({ message: 'Logged out' });
   });
 
+  // Update user first name and last name
+app.post('/update-user', async (req, res) => {
+  if (req.session.userId) {
+    try {
+      await User.findByIdAndUpdate(req.session.userId, {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+      });
+      res.send({ message: 'User updated successfully' });
+    } catch (error) {
+      res.status(500).send({ message: 'Error updating user' });
+    }
+  } else {
+    res.status(401).send({ message: 'You must be logged in to update your profile' });
+  }
+});
+
+
   app.listen(4000);

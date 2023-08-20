@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
       type: req.body.type,
       firstName: req.body.firstName,
       lastName: req.body.lastName
+
     });
     await user.save();
     res.send({ message: 'User registered' });
@@ -90,5 +91,30 @@ app.post('/update-user', async (req, res) => {
   }
 });
 
+app.delete('/delete-account/:id', async (req, res) => {
+  try {
+      const userId = req.params.id; // Assuming you have user in req through authentication middleware
 
+      // Delete associated data
+      // await ClubMember.deleteMany({ userId });
+      // await Club.deleteMany({ createdBy: userId });
+      // await BookReview.deleteMany({ userId });
+      // await ReviewLike.deleteMany({ userId });
+      // await UserLike.deleteMany({ userId });
+      // await Announcement.deleteMany({ authorId: userId });
+
+      // Delete the user
+      await User.findByIdAndDelete(userId);
+
+      res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred while deleting the account' });
+  }
+});
+
+app.get('/users', async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
   app.listen(4000);

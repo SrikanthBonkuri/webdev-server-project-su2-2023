@@ -117,4 +117,32 @@ app.get('/users', async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
+
+const recipeSchema = new mongoose.Schema({
+  title: String,
+  image: String,
+  vegetarian: String,
+  cuisine: String,
+  readyInMinutes: String,
+  ingredients: String,
+  instructions: String,
+});
+const Recipe = mongoose.model('recipes', recipeSchema);
+
+app.post('/create-recipe', async (req, res) => {
+
+  const recipe = new Recipe({
+    title: req.body.title,
+    image: req.body.image,
+    vegetarian: req.body.vegetarian,
+    cuisine: req.body.cuisine,
+    readyInMinutes: req.body.readyInMinutes,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions
+
+  });
+  await recipe.save();
+  res.send({ message: 'Recipe created' });
+});
+
   app.listen(4000);

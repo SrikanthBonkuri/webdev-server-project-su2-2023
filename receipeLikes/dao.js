@@ -12,4 +12,4 @@ export const getLikesForRecipe = (recipeId) =>
 recipesMainLikesModel.find({ recipeId });
 //recipesMainLikesModel.find({ recipeId }).populate("users");
 export const getLatestLikedRecipes = ()=>
-recipesMainLikesModel.find().sort({ $natural: -1 }).limit(3)
+recipesMainLikesModel.find().sort({ $natural: -1 }).limit(5)

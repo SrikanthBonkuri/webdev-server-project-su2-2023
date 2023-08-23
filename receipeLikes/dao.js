@@ -9,6 +9,7 @@ recipesMainLikesModel.deleteOne({ user: userId, recipe: recipeId });
 export const getLikesForUser = (userId) =>
 recipesMainLikesModel.find({ user: userId }).populate("recipesMain", "name");
 export const getLikesForRecipe = (recipeId) =>
-recipesMainLikesModel.find({ recipeId }).populate("users");
+recipesMainLikesModel.find({ recipeId });
+//recipesMainLikesModel.find({ recipeId }).populate("users");
 export const getLatestLikedRecipes = ()=>
-recipesMainLikesModel.find().sort({ $natural: -1 }).limit(2)
+recipesMainLikesModel.find().sort({ $natural: -1 }).limit(3)

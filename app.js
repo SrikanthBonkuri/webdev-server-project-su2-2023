@@ -3,6 +3,7 @@ import cors from 'cors';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import RecipeLikesRoutes from "./receipeLikes/routes.js";
 import { MongoClient, ServerApiVersion } from 'mongodb';
 const app = express();
 
@@ -44,6 +45,7 @@ const userSchema = new mongoose.Schema({
 
     });
     await user.save();
+    req.session["currentUser"] = user;
     res.send({ message: 'User registered' });
   });
   
@@ -52,6 +54,7 @@ const userSchema = new mongoose.Schema({
     const user = await User.findOne({ username: req.body.username });
     if (user && await bcrypt.compare(req.body.password, user.password)) {
       req.session.userId = user._id;
+      req.session["currentUser"] = user;
       res.send({ message: 'Logged in', user });
     } else {
       res.status(401).send({ message: 'Invalid credentials' });
@@ -114,6 +117,7 @@ app.delete('/delete-account/:id', async (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
+  console.log("IN USERS");
   const users = await User.find();
   res.json(users);
 });
@@ -145,4 +149,5 @@ app.post('/create-recipe', async (req, res) => {
   res.send({ message: 'Recipe created' });
 });
 
-  app.listen(4000);
+RecipeLikesRoutes(app);
+app.listen(4000);
